@@ -1,0 +1,1 @@
+Instructiunea lui a fost modificată pentru ca rezultatul să fie pe 17 biți. Fișierul instructions.hex a fost redenumit în instructions.mem pentru a facilita modificarea în Vivado. Tot procesorul a fost comprimat într-un singur modul pentru a reduce numărul de LUT-uri. 
