@@ -1,9 +1,9 @@
 20010001 // addi at zero 0x1     
 20020002 // addi v0 zero 0x2
-08000004 //j 0x4
+08000004 // j 0x4
 20030005 // addi v1 zero 0x5 
 20030003 // addi v1 zero 0x3 
-0C000007 //jal 0x7 
+0C000007 // jal 0x7 
 20040006 // addi a0 zero 0x6
 00032020 // add a0 zero v1     
 00412822 // sub a1 v0 at    
