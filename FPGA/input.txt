@@ -1,0 +1,24 @@
+20010001 // addi at zero 0x1     
+20020002 // addi v0 zero 0x2
+08000004 //j 0x4
+20030005 // addi v1 zero 0x5 
+20030003 // addi v1 zero 0x3 
+0C000007 //jal 0x7 
+20040006 // addi a0 zero 0x6
+00032020 // add a0 zero v1     
+00412822 // sub a1 v0 at    
+30460002 // andi a2 v0 0x2    
+00613827 // nor a3 v1 at    
+34280003 // ori t0 at 0x3      
+0041482A // slt t1 v0 at      
+00625025 // or t2 v1 v0    
+3C0B0001 // lui t3 0x1   
+AC030000 // sw v1 0x0(zero)       
+8C110000 // lw s1 0x0(zero)      
+12230001 // beq s1 v1 0x1      
+20130005 // addi s3 zero 0x5    
+16630001 // bne s3 v1 0x1     
+20150006 // addi s5 zero 0x6    
+20160007 // addi s6 zero 0x7    
+20170008 // addi s7 zero 0x8    
+FFFFFFFF // resetare           
