@@ -1,24 +1,25 @@
-20010001 // addi at zero 0x1     
-20020002 // addi v0 zero 0x2
-08000004 //j 0x4
-20030005 // addi v1 zero 0x5 
-20030003 // addi v1 zero 0x3 
-0C000007 //jal 0x7 
-20040006 // addi a0 zero 0x6
-00032020 // add a0 zero v1     
-00412822 // sub a1 v0 at    
-30460002 // andi a2 v0 0x2    
-00613827 // nor a3 v1 at    
-34280003 // ori t0 at 0x3      
-0041482A // slt t1 v0 at      
-00625025 // or t2 v1 v0    
-3C0B0010 // lui t3 0x10   
-AC030000 // sw v1 0x0(zero)       
-8C110000 // lw s1 0x0(zero)      
-12230001 // beq s1 v1 0x1      
-20130005 // addi s3 zero 0x5    
-16630001 // bne s3 v1 0x1     
-20150006 // addi s5 zero 0x6    
-20160007 // addi s6 zero 0x7    
-20170008 // addi s7 zero 0x8    
-03E00008 // jr ra             
+20080005 addi t0, zero, 0x5 result=0x5
+2009000A addi t1, zero, 0xa result=0xa 
+01091020 add v0, t0, t1 result=0xf 
+01281022 sub v0,t1,t0 result=0x5 
+310A0003 andi t2 t0 0x3 result=0x1 
+012A1025 or v0, t1, t2 result=0xb 
+0109582A slt t3,t0,t1 result=0x1 
+15600001 bne t3,zero,0x1 result=0x24 
+00000020 add zero, zero, zero 
+116A0001 beq t3, t2, 0x1 result=0x2c 
+00000020 add zero, zero, zero 
+20420005 addi v0,v0,0x5 result=0x10 
+00021080 sll v0,v0,0x2 result=0x40 
+00021042 srl v0,v0,0x1 result=0x20 
+3C020001 lui v0,0x1 result=0x10000 
+2042000A addi v0,v0,0xa result=0x1000a 
+0C000012 jal 0x12 
+00000020 add zero, zero, zero 
+AFAB0000 sw t3, 0x0(sp) result=0x1 
+8FAC0000 lw t4, 0x0(sp) result=0x1 
+3402000A ori v0,zero,0xa result=0xa 
+00481027 nor v0,v0,t0 result=1fff0 
+08000018 j 0x18 result=0x60 
+00000020 add zero, zero, zero 
+FFFFFFFF resetare
