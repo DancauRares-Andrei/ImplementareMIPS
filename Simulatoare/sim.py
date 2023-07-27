@@ -7,7 +7,7 @@ class MIPSProcessor:
         self.data_memory = [0] * 100
         self.memory = [0] * 100
 
-        # Reading initial memory contents from files
+        # Incarcarea octetilor aferenti ROM-ului din fisier
         with open("instructions.mem", "r") as f:
             hex_instructions = f.read().split()
             self.memory= hex_instructions
@@ -124,13 +124,10 @@ class MIPSProcessor:
         else:
             self.pc += 4
 
-#Exemplu de folosire
-
-if __name__ == "__main__":
-   
+#Echivalent testbench
+if __name__ == "__main__":  
     processor = MIPSProcessor()
     #Executarea instructiunilor, se simuleaza perioadele unui clock
     while processor.pc<len(processor.memory):
-        # Simulate a clock cycle and process the instruction
         processor.process_instruction()
         time.sleep(0.1)
