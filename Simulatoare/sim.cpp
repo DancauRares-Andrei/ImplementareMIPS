@@ -7,7 +7,12 @@
 
 class MIPSProcessor {
 public:
-    MIPSProcessor() : pc(0), registers(32, 0), data_memory(100, 0), memory(100, 0), result(0) {
+    uint32_t pc;
+    std::vector<uint32_t> registers;
+    std::vector<uint32_t> data_memory;
+    std::vector<uint32_t> memory;
+    //Initializare banc de registre, RAM, ROM, registru PC
+    MIPSProcessor() : pc(0), registers(32, 0), data_memory(100, 0), memory(100, 0) {
         // Reading initial memory contents from files
         std::ifstream file("instructions.mem");
         std::string hex_instruction;
@@ -19,6 +24,7 @@ public:
     }
 
     void process_instruction() {
+        //Procesarea instructiunilor, cate una pe rand
         uint32_t instruction = (memory[pc]<<24)|(memory[pc+1]<<16)|(memory[pc+2]<<8)|memory[pc+3];
         uint32_t opcode = instruction >> 26;
         uint32_t rs = (instruction >> 21) & 0x1F;
@@ -32,8 +38,8 @@ public:
         bool jump = false;
         uint32_t jump_address = 0;
 
-        // Identifying the type of instruction
-        if (opcode == 0x00) {  // Type R
+        // Identificarea tipului de instructiune si prelucrarea efectiva
+        if (opcode == 0x00) {  // Tip R
             if (funct == 0x20) {  // add
                 registers[rd] = (registers[rs] + registers[rt]) & 0xFFFFFFFF;
                 std::cout << "PC: 0x" << std::hex << pc << ", result: 0x" << std::hex << registers[rd] << std::endl;
@@ -109,17 +115,17 @@ public:
             uint32_t reg_diff = pc + 4;
             jump_address = ((reg_diff & 0xF0000000) | (address << 2)) & 0xFFFFFFFF;
             std::cout << "PC: 0x" << std::hex << pc << ", result: 0x" << std::hex << jump_address << std::endl;
-        } else if (opcode == 0x3F) {  // internal reset instruction
+        } else if (opcode == 0x3F) {  // Instructiune de reset intern
             registers = std::vector<uint32_t>(32, 0);
             data_memory = std::vector<uint32_t>(100, 0);
             jump = true;
             jump_address = 0;
             std::cout << "PC: 0x" << std::hex << pc << ", result: 0x0 (resetare)" << std::endl;
             std::cout << "\n\n";
-        } else {
+        } else { //instructiune nesuportata
             std::cout << "PC: 0x" << std::hex << pc << ", result: 0x1FFFF (instructiune nesuportata)" << std::endl;
         }
-
+        //Actualizare PC, in functie de tipul instructiunii
         if (jump) {
             pc = jump_address;
         }
@@ -127,27 +133,17 @@ public:
             pc+=4;
         }
     }
-
-    uint32_t result;
-    uint32_t pc;
-    std::vector<uint32_t> registers;
-    std::vector<uint32_t> data_memory;
-    std::vector<uint32_t> memory;
 };
-
+//Echivalent testbench
 int main() {
     // Create the MIPS processor instance
     MIPSProcessor processor;
 
-    // Clock cycles (you may use your clock logic if necessary)
+    // Executarea instructiunilor, se simuleaza perioadele unui clock
     while (processor.pc < processor.memory.size()) {
-        // Simulate a clock cycle and process the instruction
         processor.process_instruction();
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-
-    // Get the final result after processing all instructions
-    std::cout << "Result after processing all instructions: " << std::hex << processor.result << std::endl;
 
     return 0;
 }
