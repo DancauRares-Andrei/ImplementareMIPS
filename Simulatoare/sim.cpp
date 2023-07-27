@@ -13,7 +13,7 @@ public:
     std::vector<uint32_t> memory;
     //Initializare banc de registre, RAM, ROM, registru PC
     MIPSProcessor() : pc(0), registers(32, 0), data_memory(100, 0), memory(100, 0) {
-        // Reading initial memory contents from files
+        // Incarcarea octetilor aferenti ROM-ului din fisier
         std::ifstream file("instructions.mem");
         std::string hex_instruction;
         while (file >> hex_instruction) {
@@ -136,7 +136,7 @@ public:
 };
 //Echivalent testbench
 int main() {
-    // Create the MIPS processor instance
+    
     MIPSProcessor processor;
 
     // Executarea instructiunilor, se simuleaza perioadele unui clock
